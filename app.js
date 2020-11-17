@@ -10,7 +10,7 @@ console.log("Server is running..");
 //Connect to db
 const con = mysql.createConnection({
     host: '127.0.0.1',
-    user: 'app',
+    user: 'root',
     password: 'z?yU$8!r',
     database: '4row',
     port: '3309',
