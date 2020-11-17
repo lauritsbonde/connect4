@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>4 på stribe</title>
+        <link rel="stylesheet" href="main.css">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket = io();
+        </script>
+    </head>
+
+    <body>
+        <div id="header">
+            <h1 id="headerh1">4 på stribe du!</h1>
+        </div>
+        <div id="scoreboard">
+            <h3 id="player1score">Player1 points: <span id="player1points">0</span></h3>
+            <h3 id="player2score">Player2 points: <span id="player2points">0</span></h3><br>
+            <button id="quit" onclick="quitToMain()">Quit to main menu</button>
+        </div>
+        <button id="spil" onclick="spil()"> Spil</button>
+        <div id="gamebody">
+            <div id="brickField"></div>
+        </div>
+        
+        <div id="roomOptions">
+            <div id="createRoom">
+                <h2>Create Room</h2>
+                <input type="text" name="roomid" id="roominput" placeholder="Room Name">
+                <br>
+                
+                <input type="radio" name="playerOp" id="multiplayer" value="multiplayer" checked="checked">
+                <label for="multiplayer">Multiplayer</label>
+                <input type="radio" name="playerOp" id="singlePlayer" value="singleplayer">
+                <label for="singlePlayer">Singleplayer</label>
+                <br>
+
+                <input type="radio" name="passwordOp" id="noPassword" vale="noPassword" checked="checked" onclick="hidePassword()">
+                <label for="noPassword">No password</label>
+                <input type="radio" name="passwordOp" id="passwordOn" value="passwordOn" onclick="showPassword()">
+                <label for="passwordOn">Password</label> 
+                <br>
+                <input type="text" id="password" placeholder="Room key">
+                <br>
+
+                <button id="createBut" onclick="newRoom()">Create Room!</button>
+            </div>
+
+            <div id="openRooms">
+                <div id="openHeaderContainer">
+                    <h2>Available Rooms</h2>
+                    <input type="text" id="searchRoom" placeholder="Search For Room"><br>
+                    <button id="search" onclick="searchForRoom()">Search!</button>
+                </div>
+                <div id="actualOpenRooms">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id = "errorDiv"><h3 id="errorMessage"></h3></div>
+
+
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.2.0/dist/confetti.browser.js"></script>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "4_in_row",
+  "version": "1.0.0",
+  "description": "game of 4 in a row",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Laurits Bonde Henriksen",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "socket.io": "^2.3.0"
+  }
+}
