@@ -8,7 +8,7 @@ serv.listen(2020);
 console.log("Server is running..");
 
 //Connect to db
-
+/*
 const con = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -16,8 +16,8 @@ const con = mysql.createConnection({
     database: '4row',
     port: '8889',
 });
+*/
 
-/*
 const con = mysql.createConnection({
     host: '127.0.0.1',
     user: 'app',
@@ -25,7 +25,7 @@ const con = mysql.createConnection({
     database: '4row',
     port: '3306',
 });
-*/
+
 
 con.connect((err) => {
     if(err){
