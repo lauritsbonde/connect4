@@ -7,7 +7,7 @@ const mysql = require('mysql');
 serv.listen(2020);
 console.log("Server is running..");
 
-//Connect to db
+//Connect to db -- first is local, second is server
 /*
 const con = mysql.createConnection({
     host: 'localhost',

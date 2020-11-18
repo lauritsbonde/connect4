@@ -112,7 +112,7 @@ function showPassword(){
 }
 
 let errorOut = false;
-//all error handling here :)
+//all error handling here 
 socket.on("erorr", (err) => {
     let con = document.getElementById("errorDiv");
     let msg = document.getElementById("errorMessage");
