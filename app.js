@@ -3,12 +3,13 @@ const app = express();
 const serv = require("http").Server(app);
 const io = require('socket.io')(serv,{});
 const mysql = require('mysql');
+const fs = require('fs');
 
 serv.listen(2020);
 console.log("Server is running..");
 
 //Connect to db -- first is local, second is server
-/*
+
 const con = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -16,7 +17,7 @@ const con = mysql.createConnection({
     database: '4row',
     port: '8889',
 });
-*/
+/*
 
 const con = mysql.createConnection({
     host: '127.0.0.1',
@@ -25,7 +26,7 @@ const con = mysql.createConnection({
     database: '4row',
     port: '3306',
 });
-
+*/
 
 con.connect((err) => {
     if(err){
@@ -112,7 +113,8 @@ io.on('connection', socket => {
                 socket.emit("erorr", "Wrong code");
             }
         }).catch((err)=>{
-            console.log(err);
+            //todo: remove the room before getting to here
+            socket.emit("erorr", "Room does not exist anymore");
         })
         io.to(data.roomId).emit("joined", "gamewasjoined");
     })
@@ -146,8 +148,29 @@ io.on('connection', socket => {
     // SOCKET FOR LEAVING ROOM
     //
     socket.on("leave", (data)=>{
-        addToGameDb(data.room, "left", "player "+data.player+" left the game", data.player)
+        addToGameDb(data.room, "left", "player "+data.player+" left the game", data.player);
         socket.leave(data.room);
+
+        let removeQuery = "DELETE FROM activerooms WHERE roomid = '"+data.room+"'";
+        con.query(removeQuery, (err, result) => {
+            if(err){
+                console.log(err);
+            } else {
+                //good job
+                addToGameDb(data.room, "Stopped", "player "+data.player+" left the game", data.player);
+                let fullgamesql = "SELECT * FROM "+data.room+"";
+                con.query(fullgamesql, (err, result) =>{
+                    if(err){
+                        console.log(err);
+                    } else {
+                        saveTable(result, data.room);
+                    }
+                })
+            }
+        })
+
+        //send message to non leaving player and get them to leave
+        io.to(data.room).emit('erorr', "Other player left");
     })
 
     //
@@ -520,6 +543,27 @@ function checkForWin(player, board, columns, gamestate, placeCol, placeRow){
     
     //return nothing for no wins
     return "";
+}
+
+//saving the mysql table
+function saveTable(data, room){
+/*//! THIS JUST WRITES THE FILE TO THE MAIN FOLDER, SO NOT NICE
+    fs.writeFile(""+room+".txt", JSON.stringify(data), (err)=>{
+        if(err){
+            console.log(err);
+        } else {
+            console.log("save");
+        }
+    })
+*/
+    let removeSQL = "DROP TABLE " + room + "";
+    con.query(removeSQL, (err, result) => {
+        if(err){
+            console.log(err);
+        } else {
+            //nice
+        }
+    })
 }
 
 //change turn --- modulo makes it go around because 1%2 = 1 + 1 = 2 and 2%2 = 0 + 1 = 1

@@ -113,6 +113,7 @@ function showPassword(){
 
 let errorOut = false;
 //all error handling here 
+//TODO: make som error codes at some point
 socket.on("erorr", (err) => {
     let con = document.getElementById("errorDiv");
     let msg = document.getElementById("errorMessage");
@@ -121,6 +122,10 @@ socket.on("erorr", (err) => {
         errorOut = true;
         $("#errorDiv").slideDown(700).delay(2000).slideUp(700, function(){
             errorOut = false;
+            if(err == "Other player left"){
+                quitToMain();
+                location.reload();
+            }
         });
     }
 })
