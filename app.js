@@ -17,13 +17,15 @@ const con = mysql.createConnection({
     port: '8889',
 });
 */
+
 const con = mysql.createConnection({
     host: '127.0.0.1',
     user: 'app',
     password: 'z?yU$8!r',
     database: '4row',
-    port: '8889',
+    port: '3306',
 });
+
 
 con.connect((err) => {
     if(err){
