@@ -24,47 +24,55 @@ $("#errorDiv").hide();
 socket.on("allRooms", function(data){
     document.getElementById("actualOpenRooms").innerHTML = "";
     for(let i = 0; i < data.length; i++){
-        //console.log(data[i]);
-        let container = document.createElement("div");
-        container.setAttribute("class", "openRoom");
-
-        let header = document.createElement("h4");
-        let headerText = document.createTextNode(data[i].roomid);
-
-        header.appendChild(headerText);
-
-        let button = document.createElement("button");
-        let butText = document.createTextNode("Join Room!");
-
-        button.setAttribute("onclick", "joinRoom('"+data[i].roomid+"')");
-        button.setAttribute("class", "joinButton");
-        button.setAttribute("id", data[i].roomid+"joiningroombutton");
-        button.appendChild(butText);
-
-        container.appendChild(header);
-        container.appendChild(button);
-
-        if(data[i].password != ""){
-            let lockDiv = document.createElement("div");
-
-            let img = document.createElement("img");
-            img.setAttribute("src", "padlock.png");
-            img.setAttribute("class", "passLock");
-
-            lockDiv.appendChild(img);
-            container.appendChild(lockDiv);
-
-            let passIn = document.createElement("input");
-            passIn.setAttribute("type", "text");
-            passIn.setAttribute("id", "passIn" + data[i].roomid);
-            passIn.setAttribute("placeholder", "Pass key");
-
-            container.appendChild(passIn);
-        }
-
-        document.getElementById("actualOpenRooms").appendChild(container);
+        appendRoom(data[i]);
     }
 })
+
+socket.on('newRoom', (data) =>{
+    appendRoom(data);
+})
+
+function appendRoom(data){
+    let container = document.createElement("div");
+    container.setAttribute("class", "openRoom");
+
+    let header = document.createElement("h4");
+    let headerText = document.createTextNode(data.roomid);
+
+    header.appendChild(headerText);
+
+    let button = document.createElement("button");
+    let butText = document.createTextNode("Join Room!");
+
+    button.setAttribute("onclick", "joinRoom('"+data.roomid+"')");
+    button.setAttribute("class", "joinButton");
+    button.setAttribute("id", data.roomid+"joiningroombutton");
+    button.appendChild(butText);
+
+    container.appendChild(header);
+    container.appendChild(button);
+
+    if(data.password != ""){
+        let lockDiv = document.createElement("div");
+
+        let img = document.createElement("img");
+        img.setAttribute("src", "padlock.png");
+        img.setAttribute("class", "passLock");
+
+        lockDiv.appendChild(img);
+        container.appendChild(lockDiv);
+
+        let passIn = document.createElement("input");
+        passIn.setAttribute("type", "text");
+        passIn.setAttribute("id", "passIn" + data.roomid);
+        passIn.setAttribute("placeholder", "Pass key");
+
+        container.appendChild(passIn);
+    }
+
+    document.getElementById("actualOpenRooms").appendChild(container);
+}
+
 
 function newRoom(){
     let roomId = document.getElementById("roominput").value;
@@ -290,6 +298,7 @@ function quitToMain(){
         document.getElementById("gamebody").removeChild(chat);
     }
     singlePlayerModeBool = false;
+    location.reload();
 }
 
 

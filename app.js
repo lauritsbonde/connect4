@@ -9,11 +9,11 @@ console.log("Server is running..");
 
 //Connect to db
 const con = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'app',
-    password: 'z?yU$8!r',
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
     database: '4row',
-    port: '3309',
+    port: '8889',
 });
 
 con.connect((err) => {
@@ -54,6 +54,11 @@ io.on('connection', socket => {
                     type: "created",
                     roomid: data.roomId
                 });
+                //console.log(data);
+                socket.broadcast.emit("newRoom", {
+                    roomid: data.roomId,
+                    password: data.password
+                })
                 addToGameDb(data.roomId, "created", "the room was created", "player1");
             }
         }).catch(function(err){
