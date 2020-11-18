@@ -472,6 +472,7 @@ function sendChat(){
             player: playerNum
         })
     }
+    document.getElementById("chatInp").value = "";
 }
 
 //send chats on enter key
@@ -510,8 +511,7 @@ function handleChats(msg, player, time){
     let element = document.getElementById("chats");
     element.scrollTop = element.scrollHeight;
 
-    //reset input field
-    document.getElementById("chatInp").value = "";
+
 }
 
 
