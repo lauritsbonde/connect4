@@ -91,6 +91,7 @@ function newRoom(){
             password: password
         });
     } else if(document.getElementById("singlePlayer").checked == true){
+        console.log("what");
         singlePlayerMode();
     } else {
         console.log("errors! sorry..");
@@ -215,9 +216,11 @@ socket.on("response", data => {
 })
 
 function singlePlayerMode(){
+    console.log("test");
     //consider making this work offline, for now it just uses the same stuff as multiplayer to check for wins
-
     singlePlayerModeBool = true;
+    gameState.player1ready = true;
+    gameState.player2ready = true;
     $("#roomOptions").hide();
     spil();
     //createChat(); Maybe dont do that, or use a chat robot/ai :D
@@ -225,6 +228,7 @@ function singlePlayerMode(){
     $("#gamebody").show();
     playerNum = 1;
     ingame = true;
+    console.log(gameState);
 }
 
 function robotMove(game){
@@ -398,7 +402,7 @@ function reset(column){
 }
 
 function place(column){
-    //console.log(gameState.turn);
+    console.log(gameState);
     if(gameState.turn == playerNum && gameState.isDone != true && gameState.player1ready == true && gameState.player2ready){
         //onsole.log(playerTurn);
         if(gameState.columns[column] < 6 && winner == false){
@@ -589,7 +593,9 @@ function restart(point1, point2, nextstarter){
             columns: columns,
             isDone: false,
             whoWon: "",
-            points: [point1, point2]
+            points: [point1, point2],
+            player1ready: true,
+            player2ready: true
         }
     }
 

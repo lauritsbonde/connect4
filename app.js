@@ -9,7 +9,7 @@ serv.listen(2020);
 console.log("Server is running..");
 
 //Connect to db -- first is local, second is server
-
+/*
 const con = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -17,7 +17,7 @@ const con = mysql.createConnection({
     database: '4row',
     port: '8889',
 });
-/*
+*/
 
 const con = mysql.createConnection({
     host: '127.0.0.1',
@@ -26,7 +26,7 @@ const con = mysql.createConnection({
     database: '4row',
     port: '3306',
 });
-*/
+
 
 con.connect((err) => {
     if(err){
@@ -253,7 +253,7 @@ function checkRoomExist(roomid){
 }
 
 function createRoom(roomid){
-    let sql = "CREATE TABLE "+ roomid +" (id INT AUTO_INCREMENT PRIMARY KEY, event VARCHAR(255), message VARCHAR(255), player VARCHAR(255), time DATETIME(6))";
+    let sql = "CREATE TABLE "+ roomid +" (id INT AUTO_INCREMENT PRIMARY KEY, event VARCHAR(255), message VARCHAR(255), player VARCHAR(255), time VARCHAR(64))";
     return new Promise((resolve, reject) => {
         con.query(sql, function (err, result){
             if(err) {
