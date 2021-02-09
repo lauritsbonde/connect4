@@ -91,7 +91,6 @@ function newRoom(){
             password: password
         });
     } else if(document.getElementById("singlePlayer").checked == true){
-        console.log("what");
         singlePlayerMode();
     } else {
         console.log("errors! sorry..");
@@ -196,7 +195,7 @@ socket.on("response", data => {
             player: "0"
         })
 
-        console.log(gameState);
+        //console.log(gameState);
     } else if(data.type == "rejoin"){
         //TODO: Find en bedre måde, eventuelt kig på databasen og se efter hvordan tingene skal placeres
         //Men det fungere da for nu, folk må tage sig lidt sammen jo :)
@@ -216,7 +215,6 @@ socket.on("response", data => {
 })
 
 function singlePlayerMode(){
-    console.log("test");
     //consider making this work offline, for now it just uses the same stuff as multiplayer to check for wins
     singlePlayerModeBool = true;
     gameState.player1ready = true;
@@ -228,7 +226,6 @@ function singlePlayerMode(){
     $("#gamebody").show();
     playerNum = 1;
     ingame = true;
-    console.log(gameState);
 }
 
 function robotMove(game){
@@ -236,7 +233,7 @@ function robotMove(game){
     if(singlePlayerModeBool && game.turn == 2){
         let updater = game;
         let botColumn = Math.floor(Math.random() * 8);
-        console.log(updater.columns[botColumn]);
+        //console.log(updater.columns[botColumn]);
         while(updater.columns[botColumn] >= 5){
             botColumn = Math.floor(Math.random() * 8);
         }
@@ -402,7 +399,7 @@ function reset(column){
 }
 
 function place(column){
-    console.log(gameState);
+    //console.log(gameState);
     if(gameState.turn == playerNum && gameState.isDone != true && gameState.player1ready == true && gameState.player2ready){
         //onsole.log(playerTurn);
         if(gameState.columns[column] < 6 && winner == false){
@@ -525,7 +522,7 @@ function handleChats(msg, player, time){
 
 */
 socket.on("gameRes", (data) => {
-    console.log(data);
+    //console.log(data);
     gameState = data;
     if(singlePlayerModeBool && !gameState.isDone){
         robotMove(gameState);
@@ -606,7 +603,7 @@ function restart(point1, point2, nextstarter){
 }
 
 socket.on("playerIsReady", (data) => {
-    console.log(gameState);
+    //console.log(gameState);
     if(data == 2){
         gameState.player2ready = true;
     } else if(data == 1){
